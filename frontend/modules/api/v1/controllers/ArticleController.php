@@ -1,18 +1,16 @@
 <?php
 namespace frontend\modules\api\v1\controllers;
 
-use Yii;
 use frontend\modules\api\v1\resources\Article;
+use Yii;
 use yii\data\ActiveDataProvider;
-use yii\rest\ActiveController;
-use yii\web\ForbiddenHttpException;
 use yii\web\HttpException;
 
 /**
  * Class ArticleController
  * @author Eugene Terentev <eugene@terentev.net>
  */
-class ArticleController extends ActiveController
+class ArticleController extends BaseController
 {
     /**
      * @var string
@@ -22,8 +20,8 @@ class ArticleController extends ActiveController
      * @var array
      */
     public $serializer = [
-        'class' => 'yii\rest\Serializer',
-        'collectionEnvelope' => 'items'
+        'class'              => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
     ];
 
     /**
@@ -32,19 +30,19 @@ class ArticleController extends ActiveController
     public function actions()
     {
         return [
-            'index' => [
-                'class' => 'yii\rest\IndexAction',
-                'modelClass' => $this->modelClass,
-                'prepareDataProvider' => [$this, 'prepareDataProvider']
+            'index'   => [
+                'class'               => 'yii\rest\IndexAction',
+                'modelClass'          => $this->modelClass,
+                'prepareDataProvider' => [$this, 'prepareDataProvider'],
             ],
-            'view' => [
-                'class' => 'yii\rest\ViewAction',
+            'view'    => [
+                'class'      => 'yii\rest\ViewAction',
                 'modelClass' => $this->modelClass,
-                'findModel' => [$this, 'findModel']
+                'findModel'  => [$this, 'findModel'],
             ],
             'options' => [
-                'class' => 'yii\rest\OptionsAction'
-            ]
+                'class' => 'yii\rest\OptionsAction',
+            ],
         ];
     }
 
@@ -54,7 +52,7 @@ class ArticleController extends ActiveController
     public function prepareDataProvider()
     {
         return new ActiveDataProvider(array(
-            'query' => Article::find()->published()
+            'query' => Article::find()->published(),
         ));
     }
 
